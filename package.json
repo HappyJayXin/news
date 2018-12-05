@@ -1,0 +1,12 @@
+{
+  "name": "news",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --fix src/js/*.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
