@@ -1,3 +1,28 @@
 body {
   font-family: 'malgun gothic', simhei;
 }
+
+$darkblue: #2c3e50;
+
+.back-to-top {
+  position: relative;
+  z-index: 99;
+  cursor: pointer;
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  display: none;
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+  background: lighten($darkblue, 10%);
+  border-radius: 3px;
+  img {
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    padding-bottom: 5px;
+  }
+  &:hover {
+  }
+}

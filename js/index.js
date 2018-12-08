@@ -30,7 +30,7 @@ $(function() {
           <small class="col-12">${transTime(
             data.articles[a].publishedAt
           )}</small>  
-          <h3 class="mb-3 col-12">${data.articles[a].title}</h3>          
+          <h3 class="mb-3 col-12 text-primary">${data.articles[a].title}</h3>          
         </div>          
           <p class="mb-1 text-truncate" style="max-width: 50rem">
             ${data.articles[a].description}
