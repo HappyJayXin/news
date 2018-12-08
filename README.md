@@ -1,2 +1,2 @@
 # news
- :wink: [Demo](https://happyjayxin.github.io/news/)
+ [Demo](https://happyjayxin.github.io/news/)
