@@ -1,9 +1,9 @@
 $(function() {        
     $(window).scroll(function () {
-        if ($(this).scrollTop() > 50) {
-            $('#back-to-top').fadeIn();
+        if ($(this).scrollTop() > 100) {
+            $('#back-to-top').fadeIn(200);
         } else {
-            $('#back-to-top').fadeOut();
+            $('#back-to-top').fadeOut(200);
         }        
     });
     // scroll body to 0px on click

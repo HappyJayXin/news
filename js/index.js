@@ -3,24 +3,48 @@ $(function() {
     'https://newsapi.org/v2/top-headlines?country=tw&apiKey=727212ea46e34db1ab6a32d34abf7ad5'
   const req = new Request(URL, {method: 'GET'})
 
+  // 載入前模組
+  for (let a = 0; a < 20; a++) {
+    $('#newsList').append(
+      `<a
+      href="#"
+      class="list-group-item list-group-item-action flex-column align-items-start"
+    >
+      <div class="row">          
+        <div class="htmlModal_time col-1 mb-3"></div>  
+        <div class="htmlModal_title col-12 mb-3"></div>
+      </div> 
+      <div class="row">
+        <div class="col-12 htmlModal_content mb-1"></div>
+        <div class="col-1 htmlModal_name offset-11"></div>
+      </div>
+    </a>`
+    )
+  }
+
+  // ajax
   fetch(req)
     .then(res => {
       return res.json()
     })
     .then(json => {
+      // show data to html
       showData(json)
     })
     .catch(err => {
+      // can't not get data
       $('.alert').removeClass('d-none')
       console.error('ERROR', err)
     })
 
   function showData(data) {
     if (data.status === 'ok') {
+      // article count length
       const newsLen = data.articles.length
-      console.log(data)
+      // console.log(data)
 
-      for(let a = 0; a < newsLen; a++) {
+      $('#newsList').html('')
+      for (let a = 0; a < newsLen; a++) {
         $('#newsList').append(
           `<a
           href="#"
@@ -30,7 +54,9 @@ $(function() {
           <small class="col-12">${transTime(
             data.articles[a].publishedAt
           )}</small>  
-          <h3 class="mb-3 col-12 text-primary">${data.articles[a].title}</h3>          
+          <h3 class="mb-3 col-12 text-primary">${
+            data.articles[a].title
+          }</h3>          
         </div>          
           <p class="mb-1 text-truncate" style="max-width: 50rem">
             ${data.articles[a].description}
@@ -38,7 +64,7 @@ $(function() {
           <small class="float-right">${data.articles[a].source.name}</small>
         </a>`
         )
-      }      
+      }
     }
   }
 
