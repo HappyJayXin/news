@@ -48,8 +48,9 @@ $(function() {
         $('#newsList').append(
           `<a
           href="#"
-          class="list-group-item list-group-item-action flex-column align-items-start"
+          class="a list-group-item list-group-item-action flex-column align-items-start"
         >
+        <div class="articleId sr-only">${a}</div>
         <div class="row">          
           <small class="col-12">${transTime(
             data.articles[a].publishedAt
@@ -66,6 +67,7 @@ $(function() {
         )
       }
     }
+    getDetail(data)
   }
 
   // 轉換時間格式
@@ -75,4 +77,55 @@ $(function() {
       .replace(/T/g, ' ')
       .replace(/\.[\d]{3}Z/, '')
   }
+
+  function getDetail(data) {
+    $('#newsList a').on('click', function(e) {
+      e.preventDefault()
+
+      Promise.resolve(
+        $(this)
+          .find('.articleId')
+          .text()
+      ) // 取得文章第幾篇
+        .then($('#content').hide())
+        .then($('#content_detail').show())
+        .then(id => {
+          $('#content_detail').append(`
+          <div class="card my-4 border-darkblue">
+            <img
+              class="card-img-bottom img-thumbnail"
+              src="${data.articles[id].urlToImage}"          
+            />
+            <div class="card-body">
+              <h3 class="card-title">${data.articles[id].title}</h3>
+              <p class="card-text">
+                <small class="text-muted">${transTime(
+                  data.articles[id].publishedAt
+                )}</small>
+              </p>
+              <p class="card-text">
+                ${data.articles[id].description}
+              </p>
+              <div class="row justify-content-end">            
+                <a class="col-5 text-right" target="_blank"
+                  href="${data.articles[id].url}"
+                  >${data.articles[id].source.name}</a
+                >
+              </div>
+            </div>            
+          </div>
+        `)
+        })
+        .then(() => {
+          $('#backPage img').attr('src','img/arrow.svg')
+        })
+    })
+  }
+
+  // 返回
+  $('#backPage').on('click', function() {
+    $('#content_detail').html('')
+    $('#content').show()
+    $('#backPage img').attr('src','')
+  })
 })
