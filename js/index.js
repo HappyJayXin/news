@@ -67,6 +67,7 @@ $(function() {
         )
       }
     }
+    // if item click change page and show news detail
     getDetail(data)
   }
 
@@ -81,13 +82,17 @@ $(function() {
   function getDetail(data) {
     $('#newsList a').on('click', function(e) {
       e.preventDefault()
+      let id = $(this)
+        .find('.articleId')
+        .text() // 取得文章第幾篇      
 
       Promise.resolve(
         $(this)
           .find('.articleId')
           .text()
-      ) // 取得文章第幾篇
-        .then($('#content').hide())
+      ) // 取得文章第幾篇)
+        .then($('#content').removeClass('movein').addClass('moveout'))
+        .then(setTimeout(() => { $('#content').hide() },500))
         .then($('#content_detail').show())
         .then(id => {
           $('#content_detail').append(`
@@ -107,7 +112,7 @@ $(function() {
                 ${data.articles[id].description}
               </p>
               <div class="row justify-content-end">            
-                <a class="col-5 text-right" target="_blank"
+                <a class="col-12 text-right" target="_blank"
                   href="${data.articles[id].url}"
                   >${data.articles[id].source.name}</a
                 >
@@ -117,7 +122,8 @@ $(function() {
         `)
         })
         .then(() => {
-          $('#backPage img').attr('src','img/arrow.svg')
+          // show go to back icon
+          $('#backPage img').attr('src', 'img/arrow.svg')
         })
     })
   }
@@ -125,7 +131,7 @@ $(function() {
   // 返回
   $('#backPage').on('click', function() {
     $('#content_detail').html('')
-    $('#content').show()
-    $('#backPage img').attr('src','')
+    $('#content').show().removeClass('moveout').addClass('movein')
+    $('#backPage img').attr('src', '')
   })
 })
