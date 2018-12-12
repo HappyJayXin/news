@@ -1,7 +1,7 @@
 $(function() {
   const URL =
     'https://newsapi.org/v2/top-headlines?country=tw&apiKey=727212ea46e34db1ab6a32d34abf7ad5'
-  const req = new Request(URL, {method: 'GET'})
+  const req = new Request(URL, { method: 'GET' })
 
   // 載入前模組
   for (let a = 0; a < 20; a++) {
@@ -82,20 +82,24 @@ $(function() {
   function getDetail(data) {
     $('#newsList a').on('click', function(e) {
       e.preventDefault()
-      let id = $(this)
-        .find('.articleId')
-        .text() // 取得文章第幾篇      
 
-      Promise.resolve(
-        $(this)
-          .find('.articleId')
-          .text()
-      ) // 取得文章第幾篇)
-        .then($('#content').removeClass('movein').addClass('moveout'))
-        .then(setTimeout(() => { $('#content').hide() },500))
-        .then($('#content_detail').show())
-        .then(id => {
-          $('#content_detail').append(`
+      let getid = new Promise(resolve =>
+        resolve(
+          $(this)
+            .find('.articleId')
+            .text()
+        )
+      )
+      const process = async () => {
+        let id = await getid
+        $('#content')
+          .removeClass('movein')
+          .addClass('moveout')
+        // wait 0.5 second
+        await new Promise(resolve => setTimeout(resolve, 500))
+        $('#content').hide()
+        $('#content_detail').show()
+        $('#content_detail').append(`
           <div class="card my-4 border-darkblue">
             <img
               class="card-img-bottom img-thumbnail"
@@ -120,18 +124,19 @@ $(function() {
             </div>            
           </div>
         `)
-        })
-        .then(() => {
-          // show go to back icon
-          $('#backPage img').attr('src', 'img/arrow.svg')
-        })
+        $('#backPage img').attr('src', 'img/arrow.svg')
+      }
+      process()
     })
   }
 
   // 返回
   $('#backPage').on('click', function() {
     $('#content_detail').html('')
-    $('#content').show().removeClass('moveout').addClass('movein')
+    $('#content')
+      .show()
+      .removeClass('moveout')
+      .addClass('movein')
     $('#backPage img').attr('src', '')
   })
 })
