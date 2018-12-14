@@ -148,8 +148,7 @@ $(function() {
         .show()
         .removeClass('moveout')
         .addClass('movein')
-      $('#backPage img').attr('src', '')
-      alert('ok'+sessionStorage.getItem('scrollTop'))
+      $('#backPage img').attr('src', '')     
       moveToRightPostion(sessionStorage.getItem('scrollTop'))
     }
   })
