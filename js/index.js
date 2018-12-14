@@ -88,7 +88,7 @@ $(function() {
     $('#newsList a').on('click', function(e) {
       e.preventDefault()
       // 紀錄現在位置
-      sessionStorage.setItem('scrollTop', $(window).scrollTop())
+      sessionStorage.setItem('scrollTop', window.pageYOffset)
 
       let getid = new Promise(resolve =>
         resolve(
@@ -100,7 +100,7 @@ $(function() {
       const process = async () => {
         let id = await getid
         let state = { id: id }
-        window.history.pushState(state, null, `${location.pathname}${id}`)
+        window.history.pushState(state, null, `./${id}`)
 
         $('#content')
           .removeClass('movein')
@@ -154,9 +154,12 @@ $(function() {
   })
 
   // 返回時移到上次觀看處
-  function moveToRightPostion(pos) {    
-    $('body,html').animate({
+  function moveToRightPostion(pos) {
+    $('body,html').animate(
+      {
         scrollTop: pos
-    },0)
+      },
+      0
+    )
   }
 })
