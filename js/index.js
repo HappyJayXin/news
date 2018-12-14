@@ -109,6 +109,7 @@ $(function() {
         await new Promise(resolve => setTimeout(resolve, 500))
         $('#content').hide()
         $('#content_detail').show()
+        $(document).scrollTop(0);
         $('#content_detail').append(`
           <div class="card my-4 border-darkblue">
             <img
@@ -155,11 +156,6 @@ $(function() {
 
   // 返回時移到上次觀看處
   function moveToRightPostion(pos) {    
-    $('body,html').animate(
-      {
-        scrollTop: pos + 'px'
-      },
-      0
-    )
+    $(document).scrollTop(pos);
   }
 })
