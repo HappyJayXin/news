@@ -149,13 +149,13 @@ $(function() {
         .removeClass('moveout')
         .addClass('movein')
       $('#backPage img').attr('src', '')
+      alert('ok'+sessionStorage.getItem('scrollTop'))
       moveToRightPostion(sessionStorage.getItem('scrollTop'))
     }
   })
 
   // 返回時移到上次觀看處
-  function moveToRightPostion(pos) {
-    alert(pos)
+  function moveToRightPostion(pos) {    
     $('body,html').animate(
       {
         scrollTop: pos
