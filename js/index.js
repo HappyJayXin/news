@@ -100,7 +100,7 @@ $(function() {
       const process = async () => {
         let id = await getid
         let state = { id: id }
-        window.history.pushState(state, null, `${location.pathname}/${id}`)
+        window.history.pushState(state, null, `${location.pathname}${id}`)
 
         $('#content')
           .removeClass('movein')
