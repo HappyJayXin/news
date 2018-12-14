@@ -3,6 +3,8 @@ $(function() {
     'https://newsapi.org/v2/top-headlines?country=tw&apiKey=727212ea46e34db1ab6a32d34abf7ad5'
   const req = new Request(URL, { method: 'GET' })
 
+  $('.navbar-brand').on('click', ()=> { return false })
+
   // 載入前模組
   for (let a = 0; a < 20; a++) {
     $('#newsList').append(
@@ -47,7 +49,7 @@ $(function() {
       for (let a = 0; a < newsLen; a++) {
         $('#newsList').append(
           `<a
-          href="#"
+          href=""
           class="a list-group-item list-group-item-action flex-column align-items-start"
         >
         <div class="articleId sr-only">${a}</div>
@@ -80,8 +82,10 @@ $(function() {
   }
 
   function getDetail(data) {
+    // click news list
     $('#newsList a').on('click', function(e) {
       e.preventDefault()
+      // console.log(location.pathname.slice(1))
 
       let getid = new Promise(resolve =>
         resolve(
@@ -92,6 +96,9 @@ $(function() {
       )
       const process = async () => {
         let id = await getid
+        let state = { id: id }
+        window.history.pushState(state, null, `${location.pathname}/${id}`)
+
         $('#content')
           .removeClass('movein')
           .addClass('moveout')
@@ -131,12 +138,14 @@ $(function() {
   }
 
   // 返回
-  $('#backPage').on('click', function() {
-    $('#content_detail').html('')
-    $('#content')
-      .show()
-      .removeClass('moveout')
-      .addClass('movein')
-    $('#backPage img').attr('src', '')
+  $(window).on('popstate', function(e) {    
+    if (!history.state) {
+      $('#content_detail').html('')
+      $('#content')
+        .show()
+        .removeClass('moveout')
+        .addClass('movein')
+      $('#backPage img').attr('src', '')
+    }
   })
 })

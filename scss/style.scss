@@ -47,12 +47,6 @@ $Modal_item: (time, 10) (title, 30) (content, 18) (name, 10);
   }
 }
 
-#backPage img {
-  width: 20px;
-  height: 20px;
-  transform: rotate(-90deg);
-}
-
 .moveout {
   animation-name: out;
   animation-duration: .5s;
