@@ -3,7 +3,9 @@ $(function() {
     'https://newsapi.org/v2/top-headlines?country=tw&apiKey=727212ea46e34db1ab6a32d34abf7ad5'
   const req = new Request(URL, { method: 'GET' })
 
-  $('.navbar-brand').on('click', ()=> { return false })
+  $('.navbar-brand').on('click', () => {
+    return false
+  })
 
   // 載入前模組
   for (let a = 0; a < 20; a++) {
@@ -85,7 +87,8 @@ $(function() {
     // click news list
     $('#newsList a').on('click', function(e) {
       e.preventDefault()
-      // console.log(location.pathname.slice(1))
+      // 紀錄現在位置
+      sessionStorage.setItem('scrollTop', $(window).scrollTop())
 
       let getid = new Promise(resolve =>
         resolve(
@@ -138,7 +141,7 @@ $(function() {
   }
 
   // 返回
-  $(window).on('popstate', function(e) {    
+  $(window).on('popstate', function(e) {
     if (!history.state) {
       $('#content_detail').html('')
       $('#content')
@@ -146,6 +149,14 @@ $(function() {
         .removeClass('moveout')
         .addClass('movein')
       $('#backPage img').attr('src', '')
+      moveToRightPostion(sessionStorage.getItem('scrollTop'))
     }
   })
+
+  // 返回時移到上次觀看處
+  function moveToRightPostion(pos) {    
+    $('body,html').animate({
+        scrollTop: pos
+    },0)
+  }
 })
