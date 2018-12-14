@@ -155,6 +155,7 @@ $(function() {
 
   // 返回時移到上次觀看處
   function moveToRightPostion(pos) {
+    alert(pos)
     $('body,html').animate(
       {
         scrollTop: pos
