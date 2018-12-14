@@ -158,7 +158,7 @@ $(function() {
   function moveToRightPostion(pos) {    
     $('body,html').animate(
       {
-        scrollTop: pos
+        scrollTop: pos + 'px'
       },
       0
     )
