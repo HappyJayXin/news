@@ -48,11 +48,11 @@ $Modal_item: (time, 10) (title, 30) (content, 18) (name, 10);
 }
 
 .moveout {
-  animation-name: out;
+  animation-name: moveout;
   animation-duration: .5s;
   // animation-fill-mode: forwards;
 }
-@keyframes out {
+@keyframes moveout {
   from {
     margin-right: 0;
   }
@@ -62,11 +62,11 @@ $Modal_item: (time, 10) (title, 30) (content, 18) (name, 10);
 }
 
 .movein {
-  animation-name: in;
+  animation-name: movein;
   animation-duration: .5s;
   // animation-fill-mode: forwards;
 }
-@keyframes in {
+@keyframes movein {
   from {
     margin-right: -1000px;
   }
