@@ -123,7 +123,7 @@ $(function() {
                 ${data.articles[id].description}
               </p>
               <div class="row justify-content-end">            
-                <a class="col-6 text-right" target="_blank"
+                <a class="col-lg-5 text-right" target="_blank"
                   href="${data.articles[id].url}"
                   >${data.articles[id].source.name}</a
                 >
