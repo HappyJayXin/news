@@ -2,14 +2,17 @@ $(function() {
   const URL =
     'https://newsapi.org/v2/top-headlines?country=tw&apiKey=727212ea46e34db1ab6a32d34abf7ad5'
   const req = new Request(URL, { method: 'GET' })
+  const $newsList = $('#newsList')
+  const $content_detail = $('#content_detail')
+  const $content = $('#content')
 
   $('.navbar-brand').on('click', () => {
     return false
   })
 
-  // 載入前模組
+  // before load's module
   for (let a = 0; a < 20; a++) {
-    $('#newsList').append(
+    $newsList.append(
       `<a
       href="#"
       class="list-group-item list-group-item-action flex-column align-items-start"
@@ -26,7 +29,7 @@ $(function() {
     )
   }
 
-  // ajax
+  // ajax process
   fetch(req)
     .then(res => {
       return res.json()
@@ -41,15 +44,16 @@ $(function() {
       console.error('ERROR', err)
     })
 
+  // ---------------------- Start showData function -------------------
   function showData(data) {
     if (data.status === 'ok') {
       // article count length
       const newsLen = data.articles.length
       // console.log(data)
 
-      $('#newsList').html('')
+      $newsList.html('')
       for (let a = 0; a < newsLen; a++) {
-        $('#newsList').append(
+        $newsList.append(
           `<a
           href=""
           class="a list-group-item list-group-item-action flex-column align-items-start"
@@ -74,20 +78,14 @@ $(function() {
     // if item click change page and show news detail
     getDetail(data)
   }
+  // ---------------------- End showData function -------------------
 
-  // 轉換時間格式
-  function transTime(time) {
-    return new Date(+new Date(time) + 8 * 3600 * 1000)
-      .toISOString()
-      .replace(/T/g, ' ')
-      .replace(/\.[\d]{3}Z/, '')
-  }
-
+  // ---------------------- Start getDetail function -------------------
   function getDetail(data) {
     // click news list
     $('#newsList a').on('click', function(e) {
       e.preventDefault()
-      // 紀錄現在位置
+      // Record current position
       sessionStorage.setItem('scrollTop', window.pageYOffset)
 
       let getid = new Promise(resolve =>
@@ -102,15 +100,15 @@ $(function() {
         let state = { id: id }
         window.history.pushState(state, null, `./${id}`)
 
-        $('#content')
+        $content
           .removeClass('movein')
           .addClass('moveout')
         // wait 0.5 second
         await new Promise(resolve => setTimeout(resolve, 500))
-        $('#content').hide()
-        $('#content_detail').show()
+        $content.hide()
+        $content_detail.show()
         $(document).scrollTop(0);
-        $('#content_detail').append(`
+        $content_detail.append(`
           <div class="card my-4 border-darkblue">            
             <div class="card-body">
               <h3 class="card-title">${data.articles[id].title}</h3>
@@ -140,12 +138,13 @@ $(function() {
       process()
     })
   }
+  // ---------------------- End getDetail function -------------------  
 
-  // 返回
+  // back event
   $(window).on('popstate', function(e) {
     if (!history.state) {
-      $('#content_detail').html('')
-      $('#content')
+      $content_detail.html('')
+      $content
         .show()
         .removeClass('moveout')
         .addClass('movein')
@@ -154,8 +153,16 @@ $(function() {
     }
   })
 
-  // 返回時移到上次觀看處
+  // Move back to the last you see position
   function moveToRightPostion(pos) {    
     $(document).scrollTop(pos);
+  }
+
+  // conversion time format
+  function transTime(time) {
+    return new Date(+new Date(time) + 8 * 3600 * 1000)
+      .toISOString()
+      .replace(/T/g, ' ')
+      .replace(/\.[\d]{3}Z/, '')
   }
 })
